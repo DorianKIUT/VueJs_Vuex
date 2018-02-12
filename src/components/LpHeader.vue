@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h2>Il y a {{this.$store.getters.count}} tâches</h2>
+    <h2>Il vous reste {{ all_data.length }} tâche(s) à faire</h2>
   </div>
-</template>
+</template >
 
 <script>
 
@@ -12,17 +12,33 @@ export default {
   name: `lpHeader`,
   data() {
     return {
+      data_todos: [],
+      todos_left: [],
     };
   },
   computed: {
     count(){
       return this.$store.getters.count;
     },
+    todos(){
+      this.data_todos = this.$store.getters.todos;
+      return this.$store.getters.todos;
+      
+    },
+    all_data(){
+      this.todos_left = [];
+      for (var i = 0; i< this.$store.getters.todos.length; i++)
+      {
+        if (!this.$store.getters.todos[i]["isDone"] )
+        {
+          this.todos_left.push(this.$store.getters.todos[i]["isDone"])
+        }
+      }
+      return this.todos_left
+    }
   },
-  
 };
 </script>
-
 
 <style scoped>
 h1, h2 {
